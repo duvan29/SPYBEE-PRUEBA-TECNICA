@@ -1,0 +1,186 @@
+/* SummaryComponent.module.css */
+.container {
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 8px;
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 8px;
+  width: 24px;
+  height: 24px;
+}
+
+.iconS {
+  width: 18px;
+  height: 18px;
+}
+
+.buttons {
+  margin-top: 16px;
+  border-bottom: 1px solid #797979a2;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buttons2 {
+  display: flex;
+}
+
+.flexContainerHexagons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.hexagon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 6px;
+  font-size: 14px;
+  white-space: nowrap;
+  background-color: #ffd700;
+  color: #000000; /* Letra blanca */
+  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+}
+
+
+.hexagon-1 {
+  background-color: #ffeb3b; /* Más claro */
+}
+
+.hexagon-2 {
+  background-color: #ffc107; /* Intermedio */
+  margin-left: -22px;
+}
+
+.hexagon3 {
+  background-color: #ff9800; /* Más oscuro */
+  margin-left: -22px;
+}
+
+.hexagon-4 {
+  background-color: #83540d; /* Más oscuro */
+  margin-left: 22px;
+}
+
+.button {
+  border: none;
+  background-color: transparent;
+  color: #797979;
+  padding: 8px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+}
+
+.buttonG {
+  border: none;
+  background-color: transparent;
+  color: #000000;
+  padding: 8px 16px;
+  margin-right: 8px;
+  cursor: pointer;
+  border-bottom: 2px solid #ffd700;
+  z-index: 1;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+}
+.buttonIcon {
+  margin-right: 8px;
+}
+
+.section {
+  margin-top: 24px;
+}
+.section div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sectionHeader {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.section div h4 {
+  font-size: 18px;
+  font-weight: semibold;
+  display: flex;
+  align-items: center;
+}
+
+.sectionLink {
+  color: #0070f3;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.container2 {
+  display: flex;
+  flex-direction: row;
+  gap: 4rem;
+  margin: 0 20px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.title {
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  color: #333;
+}
+
+.title2 {
+  font-size: 12px;
+  color: #333333ad;
+  white-space: nowrap;
+}
+
+.count {
+  font-size: 30px;
+  font-weight: normal;
+  color: #000000;
+  font-weight: 200;
+}
+
+.chart {
+  width: 80px;
+  height: 80px;
+  margin-top: 15px;
+}
+
+.projectName {
+  font-size: 18px;
+  color: #000000;
+  display: flex;
+  flex-direction: column;
+}
+
+.projectName span {
+  font-size: 12px;
+  font-weight: normal;
+  color: #333333ad;
+  margin: 0;
+}

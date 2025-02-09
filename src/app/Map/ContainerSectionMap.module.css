@@ -1,0 +1,11 @@
+.flexWrap{
+    display: flex;
+    flex-direction: wrap;
+    gap: 1rem;
+}
+
+@media (max-width: 1000px) {
+    .flexWrap {
+        flex-direction: column-reverse;
+    }
+}
