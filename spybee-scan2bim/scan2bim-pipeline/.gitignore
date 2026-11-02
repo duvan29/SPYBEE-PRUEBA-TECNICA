@@ -1,0 +1,38 @@
+# Point clouds, models and pipeline outputs NEVER go to git (they live in ../data)
+data/
+*.e57
+*.las
+*.laz
+*.ply
+*.pts
+*.ptx
+*.rcp
+*.rcs
+*.fls
+*.lgs
+*.rvt
+*.rfa
+*.ifc
+*.npz
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
+
+# Notebooks (outputs are stripped by pre-commit; checkpoints never)
+.ipynb_checkpoints/
+
+# Editors / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

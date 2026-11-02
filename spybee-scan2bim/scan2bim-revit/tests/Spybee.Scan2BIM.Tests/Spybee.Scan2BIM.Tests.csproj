@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Unit tests for the Revit-independent projects. Runs anywhere (CI, no Revit needed). -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="coverlet.collector" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Spybee.Scan2BIM.Contracts\Spybee.Scan2BIM.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\Spybee.Scan2BIM.Core\Spybee.Scan2BIM.Core.csproj" />
+  </ItemGroup>
+
+  <!-- Contract fixtures are LINKED from schema/ (synced from scan2bim-pipeline), never copied by hand. -->
+  <ItemGroup>
+    <None Include="..\..\schema\building.schema.json" Link="Fixtures\building.schema.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\schema\examples\building.example.json" Link="Fixtures\building.example.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,29 @@
+# Build output
+bin/
+obj/
+artifacts/
+TestResults/
+*.user
+*.suo
+.vs/
+*.nupkg
+
+# Revit / data never in git
+*.rvt
+*.rfa
+*.rte
+*.ifc
+*.e57
+*.las
+*.laz
+*.rcp
+*.rcs
+data/
+*.0001.rvt
+*_backup/
+
+# OS / editors
+Thumbs.db
+.DS_Store
+.idea/
+.vscode/

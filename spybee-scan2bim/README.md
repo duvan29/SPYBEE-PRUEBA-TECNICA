@@ -1,93 +1,68 @@
-# Spybee Scan2BIM — MVP
+# Spybee Scan2BIM — workspace
 
-Objetivo: **pasarle una nube de puntos y recibir un modelo Revit nativo** (niveles, losas, muros, columnas, vanos y espacios) en el que el modelador solo tenga que corregir lo marcado en rojo. La meta es que la máquina haga ~80 % y la persona corrija ~20 %.
+Goal: **give the pipeline a point cloud and get back a native, georeferenced Revit model** (levels,
+slabs, walls, columns, openings, spaces) where the modeller only fixes what is flagged in red.
+Target: ~80 % automatic, ~20 % corrections (LOD 200 architecture + structure).
 
-El trabajo lo hace **Claude Code** en este PC, guiado por los archivos de esta carpeta. Tú revisas los resultados en cada hito.
+The work is done by **Claude Code** on this PC, guided by the files in this folder. The team reviews the
+results at each milestone. Claude talks to you in Spanish; everything it writes (code, docs, progress) is
+in English.
 
----
+## Contents
 
-## Cómo arrancar (mañana)
+| Path | What |
+|---|---|
+| `CLAUDE.md` | Standing instructions for Claude Code (language policy, workflow, hard rules) |
+| `.claude/commands/` | `/kickoff`, `/next`, `/evaluate`, `/status`, `/research` |
+| `data/` | Point clouds and outputs — never committed (see `data/README.md`) |
+| `scan2bim-pipeline/` | **Repo 1 — Python**: pipeline + plan + PROGRESS.md + docs + building.json contract |
+| `scan2bim-revit/` | **Repo 2 — C#**: Revit add-in that builds the native model from building.json |
 
-### 1. Antes de abrir Claude Code (unos 30 min)
+What is already built (delivered with this kit):
+- **Python**: contract + JSON Schema, config, E57/LAS/LAZ streaming readers, georeferencing/reprojection,
+  synthetic building with ground truth, `doctor`, `inspect`, `prep`; 34 tests, ruff + mypy clean, CI.
+- **C#**: Contracts + Core libraries with xUnit tests, Revit add-in with `Hello`, `Generate model`
+  (levels, walls, floors, review marking, views, shared coordinates) and `Export corrections` (walls).
+  ⚠️ Not compiled yet — that is the first C# task (T0.4).
 
-1. Copia esta carpeta al PC. La ruta debe ser corta y sin espacios, por ejemplo `C:\spybee\scan2bim`.
-2. Copia la nube de puntos a `data\raw\<nombre-proyecto>\`, por ejemplo `data\raw\torre-norte\`. **No la modifiques nunca**: es el original.
-   - Si viene en un formato propietario (`.rcp`/`.rcs` de ReCap, `.fls` de FARO, `.lgs` de Leica), exporta también un **E57** desde el software del escáner. Las instrucciones están en `docs/08_entorno.md`.
-3. Si existe el **modelo Revit hecho a mano de ese mismo edificio**, cópialo a `data\reference\<nombre-proyecto>\`. Si puedes, expórtalo también a IFC (Revit → Exportar → IFC). Sirve para medir qué tan bien lo hace la máquina.
-4. Ten a mano estos datos. Claude te los va a pedir:
-   - versión de Revit instalada (2023, 2024, 2025, 2026…);
-   - número de pisos y altura de piso a piso aproximada;
-   - si la nube está georreferenciada y en qué sistema (CTM12 / EPSG:9377, MAGNA-SIRGAS, local…);
-   - qué escáner y qué software se usaron;
-   - estado del edificio al escanear: obra gris, en acabados u ocupado.
+## Getting started (tomorrow)
 
-### 2. Abrir Claude Code
+1. Unzip to a **short path without spaces**, e.g. `C:\spybee\scan2bim\`.
+2. Copy the point cloud to `data\raw\<project>\` (e.g. `data\raw\torre-norte\`). Never edit it.
+   Proprietary formats (`.rcp`, `.fls`, `.lgs`): also export an **E57** from the scanner software
+   (`scan2bim-pipeline/docs/engineering/ENVIRONMENT_SETUP_WINDOWS.md`).
+3. If the hand-made Revit model of the same building exists, put it in `data\reference\<project>\`
+   (+ an IFC export of it). It lets us measure how good the automation is.
+4. Install Git, Claude Code, `uv` and the .NET SDK 8 (links in the environment doc).
+5. Open a terminal in this folder and run `claude`, then type **`/kickoff`**.
+6. In later sessions type **`/next`**. Check progress anytime in `scan2bim-pipeline/PROGRESS.md` or with `/status`.
+
+Have at hand: Revit version, number of storeys and floor-to-floor height, whether the cloud is
+georeferenced (and in which system, e.g. CTM12 / EPSG:9377), scanner + software used, building state
+(shell / finishing / occupied).
+
+## Repositories on GitHub
+
+Create two **private** repos (e.g. `spybee/scan2bim-pipeline`, `spybee/scan2bim-revit`), then in each folder:
 
 ```powershell
-cd C:\spybee\scan2bim
-claude
+git init -b main; git add .; git commit -m "chore: initial scaffolding"
+git remote add origin <url>; git push -u origin main
 ```
 
-Claude Code lee `CLAUDE.md` automáticamente y ahí encuentra todas sus instrucciones.
+Claude can do this in task T0.2 when you ask it to.
 
-### 3. Primera sesión
+## Plan at a glance
 
-Escribe:
-
-```
-/arrancar
-```
-
-Claude hace estas cuatro cosas:
-1. Revisa el PC.
-2. Instala el entorno de Python.
-3. Analiza la nube.
-4. Te entrega una **ficha de la nube**: puntos, tamaño, pisos, densidad y georreferencia.
-
-### 4. Sesiones siguientes
-
-```
-/siguiente
-```
-
-Claude toma la siguiente tarea pendiente del plan, la ejecuta, la verifica y actualiza `PROGRESO.md`. En los hitos marcados con 🎯 se detiene a mostrarte el resultado.
-
-Otros comandos:
-- `/siguiente T4.2`: ejecuta una tarea específica.
-- `/evaluar`: compara el modelo automático contra el manual y actualiza las métricas.
-- `/estado`: muestra un resumen de dónde vamos y qué sigue.
-
----
-
-## Mapa de la carpeta
-
-| Archivo | Para qué |
+| Days | Visible result |
 |---|---|
-| `CLAUDE.md` | Instrucciones permanentes para Claude Code: reglas, cómo trabajar, comandos |
-| `PROGRESO.md` | Bitácora: estado, métricas, decisiones, preguntas abiertas. **Míralo para saber cómo vamos** |
-| `docs/00_contexto.md` | Por qué hacemos esto, alcance del MVP y glosario |
-| `docs/01_plan_ejecucion.md` | **El plan**: bloques, tareas, criterios de aceptación e hitos |
-| `docs/02_arquitectura.md` | Estructura del código, CLI, carpetas de datos y configuración |
-| `docs/03_building_json.md` | Formato intermedio `building.json`, el contrato entre Python y Revit |
-| `docs/04_algoritmos.md` | Cómo se detecta cada elemento y con qué parámetros |
-| `docs/05_revit_addin.md` | Especificación del add-in de Revit (C#) |
-| `docs/06_georreferencia.md` | Coordenadas, CTM12 y cómo queda alineado en Revit |
-| `docs/07_evaluacion.md` | Métricas, evaluación contra el modelo manual y protocolo del piloto |
-| `docs/08_entorno.md` | Instalación en Windows y solución de problemas |
-| `docs/referencia/` | Investigación de mercado y propuesta técnica completa |
-| `.claude/commands/` | Los comandos `/arrancar`, `/siguiente`, `/evaluar` y `/estado` |
-| `data/` | Nubes y resultados. **No se sube a git** |
+| 0–1 | Both repos green on Windows, `Hello` in Revit, cloud report |
+| 2–3 | 🎯 Levels + slabs as IFC over the cloud |
+| 4–6 | 🎯 Walls detected (per-storey images) |
+| 7–8 | 🎯 **Native Revit** with levels, walls, floors over the cloud |
+| 9–11 | Columns, openings, spaces |
+| 12–13 | Confidence, QA report, evaluation, one end-to-end command |
+| 14–15 | 🎯 Pilot: a modeller corrects with a stopwatch → do we reach 80/20? |
 
-## Cronograma esperado
-
-| Días | Resultado visible |
-|---|---|
-| 1 | Ficha de la nube y nube de trabajo lista |
-| 2–3 | 🎯 Niveles y losas en un IFC superpuesto a la nube |
-| 4–6 | 🎯 Muros detectados (imágenes de cada piso) |
-| 7–8 | 🎯 **Revit nativo** con niveles, muros y losas sobre la nube |
-| 9–11 | Columnas, vanos y espacios |
-| 12–13 | Confianza, reporte de calidad, evaluación y un solo comando de punta a punta |
-| 14–15 | 🎯 Piloto: un modelador corrige con cronómetro y medimos el 80/20 |
-
-Son días de trabajo efectivo. Si la nube es limpia y el edificio es regular, varias etapas salen más rápido.
+After the MVP: more buildings, ML segmentation, and the **Spybee platform interface** (upload → automatic
+processing → review → download). See `scan2bim-pipeline/docs/plan/ROADMAP.md`.

@@ -1,0 +1,347 @@
+{
+  "schema_version": "0.1.0",
+  "generator": {
+    "name": "scan2bim",
+    "version": "0.1.0",
+    "git": null,
+    "created": "2026-01-01T00:00:00Z",
+    "config_hash": null
+  },
+  "project": {
+    "id": "synthetic",
+    "name": "Synthetic box",
+    "capture_date": "2026-01-01",
+    "scanner": "synthetic",
+    "building_state": "shell"
+  },
+  "georef": {
+    "crs": "EPSG:9377",
+    "offset": {
+      "x": 4880000.0,
+      "y": 2066000.0,
+      "z": 2600.0
+    },
+    "true_north_deg": 0.0,
+    "vertical": "orthometric"
+  },
+  "dominant_direction_deg": 0.0,
+  "levels": [
+    {
+      "id": "L1",
+      "confidence": 1.0,
+      "status": "auto",
+      "reasons": [],
+      "metrics": {},
+      "name": "Level 1",
+      "elevation": 0.0
+    },
+    {
+      "id": "LR",
+      "confidence": 1.0,
+      "status": "auto",
+      "reasons": [],
+      "metrics": {},
+      "name": "Roof",
+      "elevation": 2.6
+    }
+  ],
+  "slabs": [
+    {
+      "id": "S-0001",
+      "confidence": 1.0,
+      "status": "auto",
+      "reasons": [],
+      "metrics": {},
+      "level": "L1",
+      "outline": [
+        [
+          10.0,
+          10.0
+        ],
+        [
+          22.0,
+          10.0
+        ],
+        [
+          22.0,
+          18.0
+        ],
+        [
+          10.0,
+          18.0
+        ]
+      ],
+      "holes": [],
+      "top_offset": 0.0,
+      "thickness": 0.12
+    },
+    {
+      "id": "S-0002",
+      "confidence": 1.0,
+      "status": "auto",
+      "reasons": [],
+      "metrics": {},
+      "level": "LR",
+      "outline": [
+        [
+          10.0,
+          10.0
+        ],
+        [
+          22.0,
+          10.0
+        ],
+        [
+          22.0,
+          18.0
+        ],
+        [
+          10.0,
+          18.0
+        ]
+      ],
+      "holes": [],
+      "top_offset": 0.0,
+      "thickness": 0.12
+    }
+  ],
+  "walls": [
+    {
+      "id": "W-0001",
+      "confidence": 1.0,
+      "status": "auto",
+      "reasons": [],
+      "metrics": {},
+      "base_level": "L1",
+      "top_level": "LR",
+      "axis": [
+        [
+          10.075,
+          10.075
+        ],
+        [
+          21.925,
+          10.075
+        ]
+      ],
+      "thickness": 0.15,
+      "base_offset": 0.0,
+      "height": 2.48,
+      "faces_seen": 2,
+      "material_guess": "masonry"
+    },
+    {
+      "id": "W-0002",
+      "confidence": 1.0,
+      "status": "auto",
+      "reasons": [],
+      "metrics": {},
+      "base_level": "L1",
+      "top_level": "LR",
+      "axis": [
+        [
+          21.925,
+          10.075
+        ],
+        [
+          21.925,
+          17.925
+        ]
+      ],
+      "thickness": 0.15,
+      "base_offset": 0.0,
+      "height": 2.48,
+      "faces_seen": 2,
+      "material_guess": "masonry"
+    },
+    {
+      "id": "W-0003",
+      "confidence": 1.0,
+      "status": "auto",
+      "reasons": [],
+      "metrics": {},
+      "base_level": "L1",
+      "top_level": "LR",
+      "axis": [
+        [
+          21.925,
+          17.925
+        ],
+        [
+          10.075,
+          17.925
+        ]
+      ],
+      "thickness": 0.15,
+      "base_offset": 0.0,
+      "height": 2.48,
+      "faces_seen": 2,
+      "material_guess": "masonry"
+    },
+    {
+      "id": "W-0004",
+      "confidence": 1.0,
+      "status": "auto",
+      "reasons": [],
+      "metrics": {},
+      "base_level": "L1",
+      "top_level": "LR",
+      "axis": [
+        [
+          10.075,
+          17.925
+        ],
+        [
+          10.075,
+          10.075
+        ]
+      ],
+      "thickness": 0.15,
+      "base_offset": 0.0,
+      "height": 2.48,
+      "faces_seen": 2,
+      "material_guess": "masonry"
+    },
+    {
+      "id": "W-0005",
+      "confidence": 1.0,
+      "status": "auto",
+      "reasons": [],
+      "metrics": {},
+      "base_level": "L1",
+      "top_level": "LR",
+      "axis": [
+        [
+          10.15,
+          14.0
+        ],
+        [
+          21.85,
+          14.0
+        ]
+      ],
+      "thickness": 0.1,
+      "base_offset": 0.0,
+      "height": 2.48,
+      "faces_seen": 2,
+      "material_guess": "masonry"
+    }
+  ],
+  "columns": [
+    {
+      "id": "C-0001",
+      "confidence": 1.0,
+      "status": "auto",
+      "reasons": [],
+      "metrics": {},
+      "base_level": "L1",
+      "top_level": "LR",
+      "center": [
+        19.0,
+        16.0
+      ],
+      "shape": "rect",
+      "size": [
+        0.3,
+        0.3
+      ],
+      "rotation_deg": 0.0,
+      "embedded_in": null
+    }
+  ],
+  "openings": [
+    {
+      "id": "O-0001",
+      "confidence": 1.0,
+      "status": "auto",
+      "reasons": [],
+      "metrics": {},
+      "host": "W-0001",
+      "kind": "window",
+      "offset_along": 4.0,
+      "width": 1.2,
+      "height": 1.0,
+      "sill": 0.9
+    },
+    {
+      "id": "O-0002",
+      "confidence": 1.0,
+      "status": "auto",
+      "reasons": [],
+      "metrics": {},
+      "host": "W-0005",
+      "kind": "door",
+      "offset_along": 2.0,
+      "width": 0.9,
+      "height": 2.1,
+      "sill": 0.0
+    }
+  ],
+  "spaces": [
+    {
+      "id": "R-0001",
+      "confidence": 1.0,
+      "status": "auto",
+      "reasons": [],
+      "metrics": {},
+      "level": "L1",
+      "polygon": [
+        [
+          10.15,
+          10.15
+        ],
+        [
+          21.85,
+          10.15
+        ],
+        [
+          21.85,
+          13.95
+        ],
+        [
+          10.15,
+          13.95
+        ]
+      ],
+      "seed": [
+        16.0,
+        12.05
+      ],
+      "area": 44.459999999999994,
+      "name_guess": null
+    },
+    {
+      "id": "R-0002",
+      "confidence": 1.0,
+      "status": "auto",
+      "reasons": [],
+      "metrics": {},
+      "level": "L1",
+      "polygon": [
+        [
+          10.15,
+          14.05
+        ],
+        [
+          21.85,
+          14.05
+        ],
+        [
+          21.85,
+          17.85
+        ],
+        [
+          10.15,
+          17.85
+        ]
+      ],
+      "seed": [
+        16.0,
+        15.950000000000001
+      ],
+      "area": 44.460000000000015,
+      "name_guess": null
+    }
+  ],
+  "summary": null
+}

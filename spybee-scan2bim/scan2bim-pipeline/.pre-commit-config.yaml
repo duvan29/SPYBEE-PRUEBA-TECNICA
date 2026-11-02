@@ -1,0 +1,27 @@
+# Install once per clone:  uv run pre-commit install
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-added-large-files   # protects against committing point clouds
+        args: ["--maxkb=1024"]
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff
+        args: ["--fix"]
+      - id: ruff-format
+  - repo: local
+    hooks:
+      - id: schema-in-sync
+        name: building.json schema is in sync with model.py
+        entry: uv run pytest -q tests/test_model.py -k schema
+        language: system
+        pass_filenames: false
+        files: ^src/scan2bim/model\.py$

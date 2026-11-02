@@ -1,0 +1,86 @@
+# Default pipeline parameters. Units: metres / degrees.
+# Per-project overrides go in data/projects/<project>.yaml under the `overrides:` key
+# (only the keys that change). Unknown keys are rejected on purpose (typo protection).
+# See docs/algorithms/DETECTION_ALGORITHMS.md for what each parameter does.
+
+io:
+  max_points_inspect_sample: 2000000
+  read_chunk_points: 20000000
+  e57_max_ram_fraction: 0.33     # refuse to load an E57 scan bigger than this fraction of free RAM
+
+prep:
+  voxel_size: 0.01               # working cloud resolution
+  outlier_nb_neighbors: 20
+  outlier_std_ratio: 2.0
+  normal_radius: 0.05
+  normal_max_nn: 30
+  offset_round: 1000.0           # x/y offset rounded to this (nearest)
+  large_coord_threshold: 100000.0
+  z_offset_threshold: 1000.0
+  z_offset_round: 100.0
+  local_cloud_voxel: 0.025       # decimated local cloud linked in Revit
+
+levels:
+  horizontal_normal_min_nz: 0.9
+  z_hist_bin: 0.02
+  min_peak_fraction: 0.02
+  min_floor_to_floor: 2.0
+  max_floor_to_floor: 6.0
+  default_slab_thickness: 0.12
+  min_slab_thickness: 0.08
+  max_slab_thickness: 0.60
+
+slabs:
+  concave_hull_ratio: 0.05
+  raster_cell: 0.05
+  simplify_tolerance: 0.05
+  orthogonalize_angle_tol_deg: 5.0
+  min_hole_area: 1.0
+
+walls:
+  slice_main: [1.0, 1.5]
+  slice_check: [[0.5, 0.9], [1.6, 2.0]]
+  vertical_normal_max_nz: 0.15
+  ransac_distance: 0.015
+  min_face_length: 0.40
+  min_face_points: 300
+  parallel_angle_tol_deg: 3.0
+  thickness_range: [0.06, 0.40]
+  thickness_catalog: [0.08, 0.10, 0.12, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40]
+  default_one_face_thickness: 0.15
+  snap_dominant_tol_deg: 3.0
+  collinear_merge_gap: 0.30
+  collinear_offset_tol: 0.03
+  join_extend_max: 0.50
+  min_vertical_continuity: 0.6
+
+columns:
+  size_range: [0.20, 1.20]
+  max_aspect_ratio: 4.0
+  min_height_fraction: 0.7
+  embedded_bump_min: 0.03
+
+openings:
+  raster_cell: 0.05
+  min_width: 0.50
+  max_width: 3.50
+  min_height: 0.40
+  door_max_sill: 0.10
+  window_min_sill: 0.50
+  see_through_min_depth: 0.30
+
+spaces:
+  raster_cell: 0.05
+  min_area: 1.0
+
+confidence:
+  review_threshold: 0.75
+  weights:
+    coverage: 0.4
+    residual: 0.3
+    consistency: 0.3
+  reason_penalty: 0.1
+
+qa:
+  tol_tight: 0.02
+  tol_loose: 0.05

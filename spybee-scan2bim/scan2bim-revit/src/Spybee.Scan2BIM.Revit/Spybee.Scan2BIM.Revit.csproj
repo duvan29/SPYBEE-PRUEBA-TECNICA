@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Revit add-in. Build for a specific Revit year:
+      dotnet build -c Release -p:RevitVersion=2025
+    Revit 2025+ runs on .NET 8; Revit 2021-2024 on .NET Framework 4.8.
+    References point to the local Revit install (Revit must be installed to build this project).
+    CI builds only Contracts/Core/Tests. Optional: switch to the Nice3point.Revit.Api.* NuGet
+    reference packages to build without Revit (see docs/CSHARP_REVIT_GUIDELINES.md).
+  -->
+  <PropertyGroup>
+    <RevitVersion Condition="'$(RevitVersion)' == ''">2025</RevitVersion>
+    <TargetFramework Condition="'$(RevitVersion)' &gt;= '2025'">net8.0-windows</TargetFramework>
+    <TargetFramework Condition="'$(RevitVersion)' &lt; '2025'">net48</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <RootNamespace>Spybee.Scan2BIM.Revit</RootNamespace>
+    <AssemblyName>Spybee.Scan2BIM.Revit</AssemblyName>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <RevitInstallDir Condition="'$(RevitInstallDir)' == ''">C:\Program Files\Autodesk\Revit $(RevitVersion)</RevitInstallDir>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>bin\$(Configuration)\Revit$(RevitVersion)\</OutputPath>
+    <DefineConstants>$(DefineConstants);REVIT$(RevitVersion)</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="RevitAPI">
+      <HintPath>$(RevitInstallDir)\RevitAPI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>$(RevitInstallDir)\RevitAPIUI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Spybee.Scan2BIM.Contracts\Spybee.Scan2BIM.Contracts.csproj" />
+    <ProjectReference Include="..\Spybee.Scan2BIM.Core\Spybee.Scan2BIM.Core.csproj" />
+  </ItemGroup>
+</Project>

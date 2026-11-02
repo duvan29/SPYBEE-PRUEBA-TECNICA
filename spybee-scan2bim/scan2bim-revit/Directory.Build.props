@@ -1,0 +1,21 @@
+<Project>
+  <!-- Settings shared by every project in the repo. -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Deterministic>true</Deterministic>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn> <!-- missing XML docs on public members: allowed for now -->
+    <!-- Turn on after the first green build on Windows (task T0.4): -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+
+    <Company>Spybee</Company>
+    <Product>Spybee Scan2BIM</Product>
+    <Copyright>Copyright (c) Spybee</Copyright>
+    <Version>0.1.0</Version>
+    <NeutralLanguage>en</NeutralLanguage>
+  </PropertyGroup>
+</Project>

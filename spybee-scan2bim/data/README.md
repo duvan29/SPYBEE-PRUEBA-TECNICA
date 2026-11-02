@@ -1,45 +1,33 @@
-# Carpeta de datos
-
-Nada de esta carpeta se sube a git, salvo este archivo.
+# Data folder (shared by both repos, never committed)
 
 ```
 data/
-├── raw/<proyecto>/         Nube ORIGINAL tal como la entregó el scan leader. SOLO LECTURA.
-│   ├── *.e57 | *.las | *.laz
-│   ├── control_points.csv  (opcional) id,este,norte,cota,metodo,precision
-│   └── info.yaml           (opcional) metadatos del formulario de entrega
-├── reference/<proyecto>/   Modelo hecho a mano del mismo edificio (para evaluar)
-│   ├── modelo_manual.rvt
-│   └── modelo_manual.ifc   (exportado desde Revit)
-├── work/<proyecto>/        Intermedios generados por el pipeline (se pueden borrar y regenerar)
-│   ├── cloud_1cm.laz
+├── raw/<project>/            What the pipeline reads: the scan leader's deliverable. READ-ONLY.
+│   ├── *.e57 | *.las | *.laz (every cloud file here is read — no duplicates)
+│   └── control_points.csv    (optional) id,easting,northing,elevation,method,precision_m
+├── originals/<project>/      (optional) huge originals archived when a decimated copy is used in raw/
+├── projects/<project>.yaml   Project metadata + parameter overrides (`scan2bim init-project -p <project>`)
+├── reference/<project>/      Hand-made model of the same building, for evaluation
+│   ├── manual_model.rvt
+│   └── manual_model.ifc      (Revit → Export → IFC)
+├── work/<project>/           Intermediates (safe to delete and regenerate)
+│   ├── cloud_work.laz        working cloud, LOCAL coordinates
 │   ├── normals.npz
-│   └── floors/F01.laz, F02.laz, ...
-└── out/<proyecto>/         Resultados
-    ├── ficha.md            Ficha de la nube
-    ├── building.json       Modelo intermedio
-    ├── model.ifc           IFC4
-    ├── cloud_local.las     Nube diezmada en coordenadas locales (para vincular en Revit)
-    ├── qa.html             Reporte de calidad
-    ├── eval.json           Métricas contra la referencia
-    └── debug/<etapa>/*.png Imágenes de verificación
+│   ├── georef.json           CRS + offset (world = local + offset)
+│   └── floors/F01.laz ...
+└── out/<project>/            Deliverables
+    ├── cloud_report.md/json  from `inspect`
+    ├── building.json         the contract consumed by the Revit add-in
+    ├── model.ifc             IFC4
+    ├── cloud_local.las       decimated local cloud to link in Revit (origin to origin)
+    ├── qa.html               per-element deviation report
+    ├── eval.json             metrics vs reference
+    ├── corrections.json      exported from Revit after review
+    └── debug/<stage>/*.png   images Claude must look at
 ```
 
-`<proyecto>` va en minúsculas, sin espacios ni tildes. Ejemplo: `torre-norte`.
-
-Ejemplo de `info.yaml`:
-
-```yaml
-nombre: Torre Norte
-direccion: Calle 100 # 10-20, Bogotá
-pisos: 6
-altura_piso_a_piso_m: 2.6
-uso: vivienda            # vivienda | oficinas | comercial | industrial | otro
-estado: obra_gris        # obra_gris | acabados | ocupado
-escaner: XGRIDS L2 Pro
-software_registro: LixelStudio
-crs: EPSG:9377           # o "local" si no está georreferenciada
-cotas: ortometricas      # ortometricas | elipsoidales | locales
-fecha_captura: 2026-10-28
-lod_pedido: 200
-```
+Rules:
+- `<project>`: lowercase letters, digits and `-` only (e.g. `torre-norte`).
+- The pipeline finds this folder via `--data-root`, `$SCAN2BIM_DATA_ROOT`, `./data` or `../data`.
+- Back up `raw/` and `reference/` outside this PC (object storage / NAS). Never in git.
+- Before using a client's scans to **train** models, a contract clause must allow it.

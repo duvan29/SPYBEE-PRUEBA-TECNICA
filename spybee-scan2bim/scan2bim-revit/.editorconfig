@@ -1,0 +1,49 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = crlf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+[*.{json,yml,yaml,xml,csproj,props,targets,addin,template}]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.cs]
+# Namespaces / usings
+csharp_style_namespace_declarations = block_scoped:suggestion
+dotnet_sort_system_directives_first = true
+csharp_using_directive_placement = outside_namespace:warning
+
+# var / expression preferences
+csharp_style_var_for_built_in_types = false:suggestion
+csharp_style_var_when_type_is_apparent = true:suggestion
+csharp_style_var_elsewhere = false:suggestion
+csharp_prefer_braces = true:warning
+csharp_style_expression_bodied_methods = when_on_single_line:suggestion
+
+# Naming: PascalCase for types/members, _camelCase for private fields, IPascal for interfaces
+dotnet_naming_rule.private_fields_underscore.symbols = private_fields
+dotnet_naming_rule.private_fields_underscore.style = underscore_camel
+dotnet_naming_rule.private_fields_underscore.severity = warning
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+dotnet_naming_style.underscore_camel.capitalization = camel_case
+dotnet_naming_style.underscore_camel.required_prefix = _
+
+dotnet_naming_rule.const_pascal.symbols = consts
+dotnet_naming_rule.const_pascal.style = pascal
+dotnet_naming_rule.const_pascal.severity = warning
+dotnet_naming_symbols.consts.applicable_kinds = field
+dotnet_naming_symbols.consts.required_modifiers = const
+dotnet_naming_style.pascal.capitalization = pascal_case
+
+# Culture: always format/parse numbers with CultureInfo.InvariantCulture (es-CO uses decimal comma!)
+dotnet_diagnostic.CA1305.severity = warning
+dotnet_diagnostic.CA1304.severity = warning
+dotnet_diagnostic.CA1310.severity = warning

@@ -1,0 +1,20 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    # The Revit add-in project needs Revit installed, so CI builds and tests only the
+    # Revit-free projects (Contracts, Core, Tests). See docs/CSHARP_REVIT_GUIDELINES.md.
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Test
+        run: dotnet test tests/Spybee.Scan2BIM.Tests/Spybee.Scan2BIM.Tests.csproj -c Release --collect:"XPlat Code Coverage"
+      # TODO(T0.4): add `dotnet format --verify-no-changes` once the first build is clean.
